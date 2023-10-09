@@ -1,1 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complex Clicker Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://i.pinimg.com/originals/e5/ad/6e/e5ad6e2c2c8f9c855715b4c098f645b6.gif');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        h1 {
+            color: #007BFF;
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        #container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        #madeBy {
+            color: #888;
+            font-size: 18px;
+            margin-top: -15px;
+        }
+        #score {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        #points {
+            font-weight: bold;
+            font-size: 28px;
+            color: #007BFF;
+        }
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 18px;
+            margin: 10px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #upgrades {
+            margin-top: 20px;
+        }
+        .upgrade {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .upgrade button {
+            background-color: #4CAF50;
+        }
+        .upgrade button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Complex Clicker Game</h1>
+        <p id="madeBy">Made By Adhav Anand</p>
+        <p id="score">Score: <span id="points">0</span></p>
+        <button onclick="clickButton()">Click</button>
+        <div id="upgrades">
+            <div class="upgrade">
+                <span>Upgrade 1 (x2 points per click)</span>
+                <button id="upgrade1Button" onclick="buyUpgrade(1)">Buy (Cost: <span id="upgrade1Cost">10</span>)</button>
+            </div>
+            <div class="upgrade">
+                <span>Upgrade 2 (x2 points per second)</span>
+                <button id="upgrade2Button" onclick="buyUpgrade(2)">Buy (Cost: <span id="upgrade2Cost">25</span>)</button>
+            </div>
+            <div class="upgrade">
+                <span>Auto Upgrader</span>
+                <button id="autoUpgradeButton" onclick="showAutoUpgradePopup()">Click here to enable Auto-Upgrade</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let points = 0;
+        let clickMultiplier = 1;
+        let autoClickMultiplier = 1;
+        let upgrade1Cost = 10;
+        let upgrade2Cost = 25;
+
+        function clickButton() {
+            points += clickMultiplier;
+            updateScore();
+        }
+
+        function buyUpgrade(upgradeId) {
+            switch (upgradeId) {
+                case 1:
+                    if (points >= upgrade1Cost) {
+                        points -= upgrade1Cost;
+                        clickMultiplier *= 2;
+                        upgrade1Cost *= 2;
+                        updateScore();
+                        updateUpgradeCost(1);
+                    }
+                    break;
+                case 2:
+                    if (points >= upgrade2Cost) {
+                        points -= upgrade2Cost;
+                        autoClickMultiplier *= 2;
+                        upgrade2Cost *= 2;
+                        updateScore();
+                        updateUpgradeCost(2);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        function updateScore() {
+            document.getElementById("points").textContent = points;
+        }
+
+        function updateUpgradeCost(upgradeId) {
+            switch (upgradeId) {
+                case 1:
+                    document.getElementById("upgrade1Cost").textContent = upgrade1Cost;
+                    break;
+                case 2:
+                    document.getElementById("upgrade2Cost").textContent = upgrade2Cost;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        function showAutoUpgradePopup() {
+            // Redirect to the purchase link in a new tab
+            window.open('https://www.roblox.com/game-pass/55854645/10-r', '_blank');
+        }
+
+        setInterval(function() {
+            points += autoClickMultiplier;
+            updateScore();
+        }, 1000);
+    </script>
+</body>
+</html>
 
